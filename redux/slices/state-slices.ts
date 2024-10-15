@@ -6,7 +6,7 @@ const initialState: IStates = {
 }
 
 const stateSlice = createSlice({
-    name: 'posts',
+    name: 'slice',
     initialState,
     reducers: {
       set_isNavOpen: (state, action: PayloadAction<boolean>) => {
