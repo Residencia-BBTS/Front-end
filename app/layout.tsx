@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import React from 'react'
 import './globals.css'
+import Providers from '../redux/Provider'
 
 export const metadata = {
   title: 'Next.js',
@@ -19,7 +20,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body>{children}</body>
+      <body>
+        <Providers>
+          <div>
+            {children}
+          </div>
+        </Providers>
+      </body>
     </html>
   )
 }
