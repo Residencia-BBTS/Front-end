@@ -16,7 +16,10 @@ export const Header = () => {
 
   return (
     <div className={`flex flex-col gap-6 items-center absolute left-0 top-0 h-screen py-32 bg-blue400 transition-all duration-500 ${isNavOpen ? "px-8 w-96" : "px-8 w-24"}`}>
-      <img src="BancoDoBrasil-Logo.svg" alt="Logo BB" />
+      <div className="flex gap-5">
+        <img src="BancoDoBrasil-Logo.svg" alt="Logo BB" />
+        <img src="Banco Do Brasil.svg" className={`transition-all duration-500 h-14 overflow-hidden ${isNavOpen ? "w-56" : "w-0"}`} alt="" />
+      </div>
       <div className="px-8 w-full bg-gray75 h-px" />
       <ul className="space-y-10">
         <li className="flex justify-center">

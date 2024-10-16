@@ -1,7 +1,29 @@
-import React from "react";
+'use client'
+
+import React, { useEffect, useState } from "react";
 import { Header } from "../../app/components/header";
 
 export default function Home() {
+
+  const [ ticketData, setTicketData ] = useState<any | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetch('http://127.0.0.1:8000/api/tickets/', {
+        method: 'GET', 
+      })
+    }
+
+    fetchData().then(response => {
+      setTicketData(response)
+    })
+    
+  })
+
+  useEffect(() => {
+    console.log(ticketData)
+  }, [ticketData])
+
   return (
     <>
     
