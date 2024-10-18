@@ -26,24 +26,24 @@ export const Header = () => {
           {isNavOpen ? (
               <button
                 onClick={toggleNavbar}
-              ><X className="text-white size-8" /></button>  
+              ><X className="text-white size-8 hover:text-yellow400" /></button>  
           ) : (
               <button
                 onClick={toggleNavbar}
-              ><AlignJustify className="text-white size-8" /></button>  
+              ><AlignJustify className="text-white size-8 hover:text-yellow400" /></button>  
           )}
         </li>
-        <li className={`flex items-center transition-all duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
-          <a href=""><Ticket className="rotate-90 text-white size-8" /></a>
-          <span className={`text-white text-2xl overflow-hidden transition-all duration-500 ${isNavOpen ? 'w-40' : 'w-0'}`}>Ticket</span>
+        <li className={`group flex items-center duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
+          <a href=""><Ticket className="group-hover:text-yellow400 rotate-90 text-white size-8" /></a>
+          <span className={`group-hover:text-yellow400 text-white text-2xl transition-[width] overflow-hidden duration-500 ${isNavOpen ? 'w-40' : 'w-0'}`}>Ticket</span>
         </li>
-        <li className={`flex items-center transition-all duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
-          <a href=""><LayoutGrid className="text-white size-8" /></a>
-          <span className={`text-white text-2xl overflow-hidden transition-all duration-500 ${isNavOpen ? 'w-40' : 'w-0'}`}>Dashboard</span>
+        <li className={`group flex items-center duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
+          <a href=""><LayoutGrid className="group-hover:text-yellow400 text-white size-8" /></a>
+          <span className={`group-hover:text-yellow400 text-white text-2xl overflow-hidden transition-[width] duration-500 ${isNavOpen ? 'w-40' : 'w-0'}`}>Dashboard</span>
         </li>
-        <li className={`flex items-center transition-all duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
-          <a href=""><Settings className="text-white size-8" /></a>
-          <span className={`text-white text-2xl overflow-hidden transition-all duration-500 ${isNavOpen ? 'w-40' : 'w-0'}`}>Settings</span>
+        <li className={`group flex items-center duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
+          <a href=""><Settings className="group-hover:text-yellow400 text-white size-8" /></a>
+          <span className={`group-hover:text-yellow400 text-white text-2xl overflow-hidden transition-[width] duration-500 ${isNavOpen ? 'w-40' : 'w-0'}`}>Settings</span>
         </li>
       </ul>
       <div className="px-8 w-full bg-gray75 h-px" />

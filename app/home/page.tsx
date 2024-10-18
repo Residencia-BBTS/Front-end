@@ -2,27 +2,38 @@
 
 import React, { useEffect, useState } from "react";
 import { Header } from "../../app/components/header";
+import dayjs from 'dayjs'
 
 export default function Home() {
 
-  const [ ticketData, setTicketData ] = useState<any | null>(null)
+  const [ ticketData, setTicketData ] = useState<any[] | null>(null)
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetch('http://127.0.0.1:8000/api/tickets/', {
-        method: 'GET', 
-      })
-    }
+   
+    const fetchTickets = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/tickets/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data: Incident[] = await response.json();
+        setTicketData(data.map(ticket => ({
+          name: ticket.object.name,
+          firstActivityTimeUtc: ticket.object.properties.firstActivityTimeUtc,
+          lastActivityTimeUtc: ticket.object.properties.lastModifiedTimeUtc,
+          status: ticket.object.properties.status,
+          severity: ticket.object.properties.severity,
+          assignedTo: ticket.object.properties.owner.assignedTo,
+          title: ticket.object.properties.title,
+        })));
+      } catch (error) {
+        console.log(error.message)
+      }
+    };
 
-    fetchData().then(response => {
-      setTicketData(response)
-    })
-    
-  })
+    fetchTickets();
 
-  useEffect(() => {
-    console.log(ticketData)
-  }, [ticketData])
+  }, [])
 
   return (
     <>
@@ -42,77 +53,39 @@ export default function Home() {
           </div>
         </div>
 
-        <table className="w-[1600px]">
+        <table className="w-[1600px] table-fixed">
           <thead className="text-2xl h-16 border border-gray75">
             <tr>
               <th className="font-normal">ID</th>
-              <th className="font-normal">Data de Criação</th>
-              <th className="font-normal">Data de Modificação</th>
+              <th className="w-[13%] font-normal">Data de Criação</th>
+              <th className="w-[16%] font-normal">Data de Modificação</th>
               <th className="font-normal">Status</th>
               <th className="font-normal">Gravidade</th>
-              <th className="font-normal">Usuário Destinado</th>
+              <th className="w-[15%] font-normal">Usuário Destinado</th>
               <th className="font-normal">Título</th>
               <th className="font-normal"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray75 border-b border-gray75">
-            {/* 
-              tickets.map(ticket => {
+            
+              {ticketData && ticketData.map(ticket => {
                 return (
-                  <tr>
-                    <td>{ticket.id}</td>
-                    <td>{ticket.dateCreation}</td>
-                    <td>{ticket.dateLastMod}</td>
-                    <td>{ticket.status}</td>
-                    <td>{ticket.priority}</td>
-                    <td>{ticket.user}</td>
-                    <td>{ticket.message}</td>
-                    <td><a href={ticket.redirect}>Acessar</a></td>
-                  </tr>)
-              })
-            */}
-            <tr className="h-14">
-              <td className="text-center text-lg">15893789347</td>
-              <td className="text-center text-lg">01/10/24</td>
-              <td className="text-center text-lg">03/10/24</td>
-              <td className="text-center text-lg">Novo</td>
-              <td className="text-center text-lg">Low</td>
-              <td className="text-center text-lg truncate">Lohhan Guilherme</td>
-              <td className="text-center text-lg truncate">Email reported by as not junk</td>
-              <td className="text-center text-lg">
-                <a href="#" className="bg-blue100 py-2.5 px-5 rounded-lg">
-                  Acessar
-                </a>
-              </td>
-            </tr>
-            <tr className="h-14">
-              <td className="text-center text-lg">15893789347</td>
-              <td className="text-center text-lg">01/10/24</td>
-              <td className="text-center text-lg">03/10/24</td>
-              <td className="text-center text-lg">Novo</td>
-              <td className="text-center text-lg">Low</td>
-              <td className="text-center text-lg truncate">Lohhan Guilherme</td>
-              <td className="text-center text-lg truncate">Email reported by as not junk</td>
-              <td className="text-center text-lg">
-                <a href="#" className="bg-blue100 py-2.5 px-5 rounded-lg">
-                  Acessar
-                </a>
-              </td>
-            </tr>
-            <tr className="h-14">
-              <td className="text-center text-lg">15893789347</td>
-              <td className="text-center text-lg">01/10/24</td>
-              <td className="text-center text-lg">03/10/24</td>
-              <td className="text-center text-lg">Novo</td>
-              <td className="text-center text-lg">Low</td>
-              <td className="text-center text-lg truncate">Lohhan Guilherme</td>
-              <td className="text-center text-lg truncate">Email reported by as not junk</td>
-              <td className="text-center text-lg">
-                <a href="#" className="bg-blue100 py-2.5 px-5 rounded-lg">
-                  Acessar
-                </a>
-              </td>
-            </tr>
+                 <tr key={ticket.name} className="h-14">
+                  <td className="text-center text-lg truncate">{ticket.name}</td>
+                  <td className="text-center text-lg">{dayjs(ticket.firstActivityTimeUtc).format('DD/MM/YYYY')}</td>
+                  <td className="text-center text-lg">{dayjs(ticket.lastActivityTimeUtc).format('DD/MM/YYYY')}</td>
+                  <td className="text-center text-lg">{ticket.status}</td>
+                  <td className="text-center text-lg">{ticket.severity}</td>
+                  <td className="text-center text-lg truncate">{ticket.assignedTo}</td>
+                  <td className="text-center text-lg truncate">{ticket.title}</td>
+                  <td className="text-center text-lg">
+                    <a href="#" className="bg-blue100 py-2.5 px-5 rounded-lg hover:bg-blue200 hover:text-white">
+                      Acessar
+                    </a>
+                  </td>
+                </tr>)
+              })}
+
           </tbody>
         </table>
 

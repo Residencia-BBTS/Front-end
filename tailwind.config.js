@@ -10,9 +10,11 @@ module.exports = {
       colors: {
         gray75: "#CFCFCF",
         blue100: "#8393BC",
-        blue400: "#1D3061"
+        blue200: "#4E659F",
+        blue400: "#1D3061",
+        yellow400: "#F3D901"
       },
-    },
+    },  
   },
   plugins: [],
 }
