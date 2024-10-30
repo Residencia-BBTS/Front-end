@@ -12,9 +12,9 @@ const Home = () => {
 
   const dispatch = useDispatch()
   const isAboutModalOpen = useSelector((state: { states: IStates }) => state.states.isAboutModal)
-  const [ selectedTicket, setSelectedTicket ] = useState<IncidentReduced | null>(null)
+  const [ selectedTicket, setSelectedTicket ] = useState<Incident | null>(null)
   const ticketData = useSelector((state: { states: IStates }) => state.states.ticketData)
-  const [ reducedTicketData, setReducedTicketData ] = useState<IncidentReduced[] | null>(null)
+
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -30,26 +30,12 @@ const Home = () => {
       }
     };
 
-    if(!ticketData) {
-      fetchTickets();
-    }
-  }, [])
+    fetchTickets();
 
-  useEffect(() => {
-    if(ticketData) {
-      const newData = ticketData.map(ticket => ({
-        name: ticket.object.name,
-        description: ticket.object.properties.description,
-        firstActivityTimeUtc: ticket.object.properties.firstActivityTimeUtc,
-        lastActivityTimeUtc: ticket.object.properties.lastModifiedTimeUtc,
-        status: ticket.object.properties.status,
-        severity: ticket.object.properties.severity,
-        assignedTo: ticket.object.properties.owner.assignedTo,
-        title: ticket.object.properties.title,
-      }))
-      setReducedTicketData(newData)
-    }
-  }, [ ticketData ])
+    const intervalId = setInterval(fetchTickets, 60000);
+
+    return () => clearInterval(intervalId);
+  }, [])
 
   return (
     <>
@@ -84,11 +70,11 @@ const Home = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray75 border-b border-gray75">
-              {reducedTicketData && reducedTicketData.map(ticket => (
-                <tr key={ticket.name} className="h-14">
-                  <td className="w-[15%] text-center text-lg truncate">{ticket.name}</td>
-                  <td className="w-[13%] text-center text-lg">{dayjs(ticket.firstActivityTimeUtc).format('DD/MM/YYYY')}</td>
-                  <td className="w-[16%] text-center text-lg">{dayjs(ticket.lastActivityTimeUtc).format('DD/MM/YYYY')}</td>
+              {ticketData && ticketData.map(ticket => (
+                <tr key={ticket.uuid} className="h-14">
+                  <td className="w-[15%] text-center text-lg truncate">{ticket.uuid}</td>
+                  <td className="w-[13%] text-center text-lg">{ticket.createdTime}</td>
+                  <td className="w-[16%] text-center text-lg">{ticket.lastModifiedTime}</td>
                   <td className="w-[12%] text-center text-lg">{ticket.status}</td>
                   <td className="w-[10%] text-center text-lg">{ticket.severity}</td>
                   <td className="w-[15%] text-center text-lg truncate">{ticket.assignedTo}</td>

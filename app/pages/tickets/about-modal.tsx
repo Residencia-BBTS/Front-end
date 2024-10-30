@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux"
 import { set_isAboutModal } from "../../../redux/slices/state-slices"
 
 interface AboutModalProps {
-  ticket: IncidentReduced
+  ticket: Incident
 }
 
 const AboutModal = ({ 
@@ -23,18 +23,18 @@ const AboutModal = ({
           <div className="flex justify-between gap-10">
             <label className="flex flex-col gap-3">
               ID
-              <span className="block w-fit p-3 border rounded-xl border-gray75">{ticket.name}</span>
+              <span className="block w-fit p-3 border rounded-xl border-gray75">{ticket.uuid}</span>
             </label>
             <label className="flex flex-col gap-3 text-right">
               Data de criação
-              <span className="block w-fit self-end p-3 border rounded-xl border-gray75">{dayjs(ticket.firstActivityTimeUtc).format('DD/MM/YYYY')}</span>
+              <span className="block w-fit self-end p-3 border rounded-xl border-gray75">{ticket.createdTime}</span>
             </label>
           </div>
           
           <div className="flex justify-between gap-10">
             <label className="flex flex-col gap-3">
               Data de modificação
-              <span className="block w-fit p-3 border rounded-xl border-gray75">{dayjs(ticket.lastActivityTimeUtc).format('DD/MM/YYYY')}</span>
+              <span className="block w-fit p-3 border rounded-xl border-gray75">{ticket.lastModifiedTime}</span>
             </label>
             <label className="flex flex-col gap-3 text-right">
               Usuário destinado

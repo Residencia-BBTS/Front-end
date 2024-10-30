@@ -1,10 +1,10 @@
-interface IncidentReduced {
-  name: string,
-  description: string,
-  firstActivityTimeUtc: string,
-  lastActivityTimeUtc: string,
-  status: string,
-  severity: string,
+interface Incident {
   assignedTo: string,
+  createdTime: string,
+  description: string,
+  lastModifiedTime: string,
+  severity: string,
+  status: string,
   title: string,
+  uuid: string,
 }
