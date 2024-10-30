@@ -25,9 +25,11 @@ const Dashboard = () => {
       }
     };
 
-    if(!ticketData) {
-      fetchTickets();
-    }
+    fetchTickets();
+
+    const intervalId = setInterval(fetchTickets, 60000);
+
+    return () => clearInterval(intervalId);
   }, [])
 
   return (
@@ -54,7 +56,7 @@ const Dashboard = () => {
               Novos tickets
             </span>
             <span className="text-yellow400 font-semibold text-3xl">
-              {!ticketData ? '0' : ticketData.filter(ticket => ticket.object.properties.status === 'New').length}
+              {!ticketData ? '0' : ticketData.filter(ticket => ticket.status === 'New').length}
             </span>
           </div>
 
@@ -64,7 +66,7 @@ const Dashboard = () => {
               Tickets ativos
             </span>
             <span className="text-yellow400 font-semibold text-3xl">
-              {!ticketData ? '0' : ticketData.filter(ticket => ticket.object.properties.status === 'In Progress').length}
+              {!ticketData ? '0' : ticketData.filter(ticket => ticket.status === 'In Progress').length}
             </span>
           </div>
 
@@ -74,7 +76,7 @@ const Dashboard = () => {
               Tickets fechados
             </span>
             <span className="text-yellow400 font-semibold text-3xl">
-              {!ticketData ? '0' : ticketData.filter(ticket => ticket.object.properties.status === 'Resolved').length}
+              {!ticketData ? '0' : ticketData.filter(ticket => ticket.status === 'Resolved').length}
             </span>
           </div>
 
