@@ -1,16 +1,15 @@
 'use client'
 
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { Header } from "../../components/header"
-import { IStates } from "../../lib/global-state-interface"
 import { useEffect } from "react"
 import { set_ticketData } from "../../../redux/slices/state-slices"
 import { TicketBarGraph } from "./ticket-bar-graph"
+import { TicketCard } from "./ticket-card"
 
 const Dashboard = () => {
 
   const dispatch = useDispatch()
-  const ticketData = useSelector((state: { states: IStates }) => state.states.ticketData)
 
   useEffect(() => {
     const fetchTickets = async () => {
@@ -51,46 +50,22 @@ const Dashboard = () => {
         </div>
 
         <div className="flex gap-24">
-
-          <div className="flex flex-col justify-around h-28 w-52 rounded-xl p-4 bg-blue400">
-            <span className="flex items-center gap-2 text-lg font-semibold text-white">
-              <div className="h-4 w-[2px] bg-yellow400" />
-              Novos tickets
-            </span>
-            <span className="text-yellow400 font-semibold text-3xl">
-              {!ticketData ? '0' : ticketData.filter(ticket => ticket.status === 'New').length}
-            </span>
-          </div>
-
-          <div className="flex flex-col justify-around h-28 w-52 rounded-xl p-4 bg-blue400">
-            <span className="flex items-center gap-2 text-lg font-semibold text-white">
-              <div className="h-4 w-[2px] bg-yellow400" />
-              Tickets ativos
-            </span>
-            <span className="text-yellow400 font-semibold text-3xl">
-              {!ticketData ? '0' : ticketData.filter(ticket => ticket.status === 'In Progress').length}
-            </span>
-          </div>
-
-          <div className="flex flex-col justify-around h-28 w-52 rounded-xl p-4 bg-blue400">
-            <span className="flex items-center gap-2 text-lg font-semibold text-white">
-              <div className="h-4 w-[2px] bg-yellow400" />
-              Tickets fechados
-            </span>
-            <span className="text-yellow400 font-semibold text-3xl">
-              {!ticketData ? '0' : ticketData.filter(ticket => ticket.status === 'Resolved').length}
-            </span>
-          </div>
-
-          <div className="flex flex-col justify-around h-28 w-52 rounded-xl p-4 bg-blue400">
-            <span className="flex items-center gap-2 text-lg font-semibold text-white">
-              <div className="h-4 w-[2px] bg-yellow400" />
-              Todos tickets
-            </span>
-            <span className="text-yellow400 font-semibold text-3xl">
-              {!ticketData ? '0' : ticketData.length}
-            </span>
-          </div>
+          <TicketCard 
+            name="Tickets novos"
+            type="New"
+          />
+          <TicketCard 
+            name="Tickets ativos"
+            type="In Progress"
+          />
+          <TicketCard 
+            name="Tickets fechados"
+            type="Resolved"
+          />
+          <TicketCard 
+            name="Todos tickets"
+            type="All"
+          />
         </div>
 
         <TicketBarGraph />
