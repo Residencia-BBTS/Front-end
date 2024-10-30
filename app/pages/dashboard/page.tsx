@@ -5,6 +5,7 @@ import { Header } from "../../components/header"
 import { IStates } from "../../lib/global-state-interface"
 import { useEffect } from "react"
 import { set_ticketData } from "../../../redux/slices/state-slices"
+import { TicketBarGraph } from "./ticket-bar-graph"
 
 const Dashboard = () => {
 
@@ -13,6 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchTickets = async () => {
+      console.log('fetched')
       try {
         const response = await fetch('http://127.0.0.1:8000/api/tickets/');
         if (!response.ok) {
@@ -27,7 +29,7 @@ const Dashboard = () => {
 
     fetchTickets();
 
-    const intervalId = setInterval(fetchTickets, 60000);
+    const intervalId = setInterval(fetchTickets, 10000);
 
     return () => clearInterval(intervalId);
   }, [])
@@ -36,7 +38,7 @@ const Dashboard = () => {
     <>
       <Header />
 
-      <div className="flex flex-col items-center py-16 px-36 size-screen gap-8">
+      <div className="flex flex-col items-center py-16 px-36 size-screen gap-10">
 
         <div className="self-start space-y-4">
           <h1 className="text-4xl">Dashboard</h1>
@@ -89,8 +91,10 @@ const Dashboard = () => {
               {!ticketData ? '0' : ticketData.length}
             </span>
           </div>
-
         </div>
+
+        <TicketBarGraph />
+
       </div>
     </>
   )
