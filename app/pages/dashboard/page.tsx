@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { set_ticketData } from "../../../redux/slices/state-slices"
 import { TicketBarGraph } from "./ticket-bar-graph"
 import { TicketCard } from "./ticket-card"
+import { TicketLineGraph } from "./ticket-line-graph"
 
 const Dashboard = () => {
 
@@ -68,7 +69,10 @@ const Dashboard = () => {
           />
         </div>
 
-        <TicketBarGraph />
+        <div className="flex gap-16">
+          <TicketBarGraph />
+          <TicketLineGraph />
+        </div>
 
       </div>
     </>

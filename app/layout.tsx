@@ -25,9 +25,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.className} overflow-hidden`}>
       <body className='bg-white text-black'>
         <Providers>
-          <div>
-            {children}
-          </div>
+          {children}
         </Providers>
       </body>
     </html>
