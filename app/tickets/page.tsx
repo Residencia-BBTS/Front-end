@@ -9,6 +9,7 @@ import { set_isAboutModal, set_ticketData } from "../../redux/slices/state-slice
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import dayjs from "dayjs";
+import { Button } from "../components/button";
 
 const Home = () => {
 
@@ -115,7 +116,7 @@ const Home = () => {
                 <th className="w-[10%] font-normal">Gravidade</th>
                 <th className="w-[15%] font-normal">Usuário </th>
                 <th className="w-[20%] font-normal">Título</th>
-                <th className="w-[10%] font-normal"></th> 
+                <th className="w-[10%]"></th> 
               </tr>
             </thead>
             <tbody className="divide-y divide-gray75 border-b border-gray75">
@@ -128,15 +129,18 @@ const Home = () => {
                   <td className="w-[10%] text-center text-lg">{ticket.severity}</td>
                   <td className="w-[15%] text-center text-lg truncate">{ticket.assignedTo}</td>
                   <td className="w-[20%] text-center text-lg truncate">{ticket.title}</td>
-                  <td className="w-[10%] text-center text-lg">
-                    <button 
-                      onClick={() => {
-                        setSelectedTicket(ticket)
-                        dispatch(set_isAboutModal(true))
-                      }} 
-                      className="bg-blue100 py-2.5 px-5 rounded-lg hover:bg-blue200 hover:text-white">
-                      Acessar
-                    </button>
+                  <td className="w-[10%]">
+                    <div className="flex items-center justify-center">
+                      <Button
+                        size="small"
+                        onClick={() => {
+                          setSelectedTicket(ticket)
+                          dispatch(set_isAboutModal(true))
+                        }} 
+                      >
+                        Acessar
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}

@@ -2,6 +2,7 @@
 
 import { signIn, useSession } from "next-auth/react"
 import { redirect } from "next/navigation"
+import { Button } from "../components/button"
 
 const Login = () => {
 
@@ -20,8 +21,8 @@ const Login = () => {
 
     <div className="flex items-center justify-center w-full">
       <div className="flex flex-col items-center justify-center w-[425px] gap-3">
-        <button className="h-20 text-3xl font-semibold bg-blue400 w-full text-white rounded-xl" onClick={() => signIn("azure-ad-b2c", { callbackUrl: '/tickets' })}>Azure</button>
-        <button className="h-20 text-3xl font-semibold bg-blue400 w-full text-white rounded-xl" onClick={() => signIn("github", { callbackUrl: '/tickets' })}>Github</button>
+        <Button onClick={() => signIn("azure-ad-b2c", { callbackUrl: '/tickets' })}>Azure</Button>
+        <Button onClick={() => signIn("github", { callbackUrl: '/tickets' })}>Github</Button>
       </div>
     </div>
   </div>

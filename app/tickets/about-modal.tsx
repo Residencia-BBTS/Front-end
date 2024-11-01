@@ -1,6 +1,7 @@
 import dayjs from "dayjs"
 import { useDispatch } from "react-redux"
 import { set_isAboutModal } from "../../redux/slices/state-slices"
+import { Button } from "../components/button"
 
 interface AboutModalProps {
   ticket: Incident
@@ -62,6 +63,7 @@ const AboutModal = ({
             Descrição
             <span className="block max-h-40 w-full p-3 border rounded-xl overflow-y-scroll border-gray75">{ticket.description}</span>
           </label>
+          <Button size="fit">Acessar</Button>
         </div>
       </div>
     </>

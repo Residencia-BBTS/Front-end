@@ -3,6 +3,7 @@
 import { signOut, useSession } from "next-auth/react"
 import { Header } from "../components/header"
 import { redirect } from "next/navigation"
+import { Button } from "../components/button"
 
 const Profile = () => {
 
@@ -31,12 +32,9 @@ const Profile = () => {
         <label className="flex flex-col gap-6 text-2xl border-b pb-3 focus:outline-none">E-mail
           <span className="text-lg truncate">{session && session.user.email}</span>
         </label>
-        <button 
-          className="h-20 text-3xl font-semibold bg-red500 w-full text-white rounded-xl"
-          onClick={logout}
-        >
+        <Button variant="danger" onClick={logout}>
           Sair
-        </button>
+        </Button>
       </div>
 
       <div className="absolute right-0 flex items-center justify-center min-h-screen">
