@@ -27,14 +27,14 @@ const AboutModal = ({
             </label>
             <label className="flex flex-col gap-3 text-right">
               Data de criação
-              <span className="block w-fit self-end p-3 border rounded-xl border-gray75">{ticket.createdTime}</span>
+              <span className="block w-fit self-end p-3 border rounded-xl border-gray75">{dayjs(ticket.createdTime).format('DD/MM/YYYY')}</span>
             </label>
           </div>
           
           <div className="flex justify-between gap-10">
             <label className="flex flex-col gap-3">
               Data de modificação
-              <span className="block w-fit p-3 border rounded-xl border-gray75">{ticket.lastModifiedTime}</span>
+              <span className="block w-fit p-3 border rounded-xl border-gray75">{dayjs(ticket.lastModifiedTime).format('DD/MM/YYYY')}</span>
             </label>
             <label className="flex flex-col gap-3 text-right">
               Usuário destinado

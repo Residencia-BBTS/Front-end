@@ -8,6 +8,7 @@ import { IStates } from "../lib/global-state-interface";
 import { set_isAboutModal, set_ticketData } from "../../redux/slices/state-slices";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import dayjs from "dayjs";
 
 const Home = () => {
 
@@ -19,18 +20,37 @@ const Home = () => {
 
   const dispatch = useDispatch()
   const isAboutModalOpen = useSelector((state: { states: IStates }) => state.states.isAboutModal)
-  const [ selectedTicket, setSelectedTicket ] = useState<Incident | null>(null)
   const ticketData = useSelector((state: { states: IStates }) => state.states.ticketData)
+  const [ selectedTicket, setSelectedTicket ] = useState<Incident | null>(null)
+  const [ ticketOrder, setTicketOrder ] = useState<string>('recent')
+  const [ ticketFilterStatus, setTicketFilterStatus ] = useState<string | null>(null)
+  const [ ticketFilterSeverity, setTicketFilterSeverity ] = useState<string | null>(null)
 
   useEffect(() => {
+    if (ticketFilterStatus === 'Todos') {
+      setTicketFilterStatus(null)
+    }
+  }, [ ticketFilterStatus ])
+
+  useEffect(() => {
+    if (ticketFilterSeverity === 'Todos') {
+      setTicketFilterSeverity(null)
+    }
+  }, [ ticketFilterSeverity ])
+
+  useEffect(() => {
+    console.log(ticketFilterSeverity)
     const fetchTickets = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/tickets/');
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/?order=${ticketOrder}${ticketFilterSeverity ? `&severity=${ticketFilterSeverity}` : ''}${ticketFilterStatus ? `&status=${ticketFilterStatus}` : ''}`
+        );
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data: Incident[] = await response.json();
         dispatch(set_ticketData(data))
+        console.log(data)
       } catch (error) {
         console.log(error.message)
       }
@@ -41,7 +61,7 @@ const Home = () => {
     const intervalId = setInterval(fetchTickets, 60000);
 
     return () => clearInterval(intervalId);
-  }, [])
+  }, [ ticketOrder, ticketFilterStatus, ticketFilterSeverity ])
 
   return (
     <>
@@ -53,11 +73,34 @@ const Home = () => {
         <div className="self-start space-y-4">
           <h1 className="text-4xl">Tickets</h1>
 
-          <div className="flex gap-2">
-            <span className="text-2xl border-l border-gray75 pl-4">Exibir: </span>
-            <select name="" id="">
-              <option value="">Data de criação</option>
-            </select>
+          <div className="flex gap-8 border-l border-gray75 pl-4">
+            <div className="flex gap-2">
+              <span className="text-2xl">Exibir: </span>
+              <select onChange={e => setTicketOrder(e.currentTarget.value)}>
+                <option value="recent">Mais recentes</option>
+                <option value="oldest">Mais antigos</option>
+              </select>
+            </div>
+            
+            <div className="flex gap-2">
+              <span className="text-2xl">Severidade: </span>
+              <select onChange={e => setTicketFilterSeverity(e.currentTarget.value)}>
+                <option value={null}>Todos</option>
+                <option value="High">Alta</option>
+                <option value="Medium">Média</option>
+                <option value="Low">Baixa</option>
+              </select>
+            </div>
+
+            <div className="flex gap-2">
+              <span className="text-2xl">Status: </span>
+              <select onChange={e => setTicketFilterStatus(e.currentTarget.value)}>
+                <option value={null}>Todos</option>
+                <option value="New">Tickets Novos</option>
+                <option value="In_Progess">Em progresso</option>
+                <option value="Resolved">Resolvidos</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -72,15 +115,15 @@ const Home = () => {
                 <th className="w-[10%] font-normal">Gravidade</th>
                 <th className="w-[15%] font-normal">Usuário </th>
                 <th className="w-[20%] font-normal">Título</th>
-                <th className="w-[10%] font-normal"></th>
+                <th className="w-[10%] font-normal"></th> 
               </tr>
             </thead>
             <tbody className="divide-y divide-gray75 border-b border-gray75">
               {ticketData && ticketData.map(ticket => (
                 <tr key={ticket.uuid} className="h-14">
                   <td className="w-[15%] text-center text-lg truncate">{ticket.uuid}</td>
-                  <td className="w-[13%] text-center text-lg">{ticket.createdTime}</td>
-                  <td className="w-[16%] text-center text-lg">{ticket.lastModifiedTime}</td>
+                  <td className="w-[13%] text-center text-lg">{dayjs(ticket.createdTime).format('DD/MM/YYYY')}</td>
+                  <td className="w-[16%] text-center text-lg">{dayjs(ticket.lastModifiedTime).format('DD/MM/YYYY')}</td>
                   <td className="w-[12%] text-center text-lg">{ticket.status}</td>
                   <td className="w-[10%] text-center text-lg">{ticket.severity}</td>
                   <td className="w-[15%] text-center text-lg truncate">{ticket.assignedTo}</td>
