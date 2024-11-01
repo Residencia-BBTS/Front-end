@@ -63,7 +63,11 @@ const AboutModal = ({
             Descrição
             <span className="block max-h-40 w-full p-3 border rounded-xl overflow-y-scroll border-gray75">{ticket.description}</span>
           </label>
-          <Button size="fit">Acessar</Button>
+          <Button size="fit">
+            <a href={ticket.incidentURL} target="_blank">
+              Acessar
+            </a>
+          </Button>
         </div>
       </div>
     </>
