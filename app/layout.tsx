@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import React from 'react'
 import './globals.css'
 import Providers from '../redux/Provider'
+import { AuthProvider } from './lib/providers'
 
 export const metadata = {
   title: 'BBTS',
@@ -22,12 +23,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.className} overflow-hidden`}>
-      <body className='bg-white text-black'>
-        <Providers>
-          {children}
-        </Providers>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en" className={`${inter.className} overflow-hidden`}>
+        <body className='bg-white text-black'>
+          <Providers>
+            {children}
+          </Providers>
+        </body>
+      </html>
+    </AuthProvider>
   )
 }

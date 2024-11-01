@@ -1,8 +1,17 @@
 'use client'
 
-import { Header } from "../../components/header"
+import { useSession } from "next-auth/react"
+import { Header } from "../components/header"
+import { redirect } from "next/navigation"
 
 const Profile = () => {
+
+  const { data: session } = useSession()
+
+  if(!session) {
+    redirect('/login')
+  }
+
   return (
     <div className="flex justify-between overflow-hidden">
       <Header />

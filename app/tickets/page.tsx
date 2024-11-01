@@ -1,20 +1,26 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { Header } from "../../components/header";
-import dayjs from 'dayjs'
+import { Header } from "../components/header";
 import AboutModal from "./about-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { IStates } from "../../lib/global-state-interface";
-import { set_isAboutModal, set_ticketData } from "../../../redux/slices/state-slices";
+import { IStates } from "../lib/global-state-interface";
+import { set_isAboutModal, set_ticketData } from "../../redux/slices/state-slices";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const Home = () => {
 
   const dispatch = useDispatch()
+  const { data: session } = useSession()
+
+  if(!session) {
+    redirect('/login')
+  }
+
   const isAboutModalOpen = useSelector((state: { states: IStates }) => state.states.isAboutModal)
   const [ selectedTicket, setSelectedTicket ] = useState<Incident | null>(null)
   const ticketData = useSelector((state: { states: IStates }) => state.states.ticketData)
-
 
   useEffect(() => {
     const fetchTickets = async () => {

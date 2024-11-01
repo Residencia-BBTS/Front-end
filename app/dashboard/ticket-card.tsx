@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import { IStates } from "../../lib/global-state-interface"
+import { IStates } from "../lib/global-state-interface"
 
 interface TicketCardProps {
   name: string,

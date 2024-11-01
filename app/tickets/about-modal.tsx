@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 import { useDispatch } from "react-redux"
-import { set_isAboutModal } from "../../../redux/slices/state-slices"
+import { set_isAboutModal } from "../../redux/slices/state-slices"
 
 interface AboutModalProps {
   ticket: Incident

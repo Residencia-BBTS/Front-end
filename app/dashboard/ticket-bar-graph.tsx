@@ -1,6 +1,6 @@
 import { BarChart } from "@mui/x-charts"
 import { useSelector } from "react-redux"
-import { IStates } from "../../lib/global-state-interface"
+import { IStates } from "../lib/global-state-interface"
 
 export const TicketBarGraph = () => {
 

@@ -1,16 +1,23 @@
 'use client'
 
 import { useDispatch } from "react-redux"
-import { Header } from "../../components/header"
+import { Header } from "../components/header"
 import { useEffect } from "react"
-import { set_ticketData } from "../../../redux/slices/state-slices"
+import { set_ticketData } from "../../redux/slices/state-slices"
 import { TicketBarGraph } from "./ticket-bar-graph"
 import { TicketCard } from "./ticket-card"
 import { TicketLineGraph } from "./ticket-line-graph"
+import { useSession } from "next-auth/react"
+import { redirect } from "next/navigation"
 
 const Dashboard = () => {
 
   const dispatch = useDispatch()
+  const { data: session } = useSession()
+
+  if(!session) {
+    redirect('/login')
+  }
 
   useEffect(() => {
     const fetchTickets = async () => {
