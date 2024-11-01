@@ -14,7 +14,7 @@
     "@mui/material": "^6.1.6",
     "@mui/x-charts": "^7.22.0",
     "@reduxjs/toolkit": "^2.3.0",
-    "@types/next-auth": "^3.13.0",
+    "@types/next-auth": "^3.15.0",
     "bbts": "file:",
     "dayjs": "^1.11.13",
     "lucide-react": "^0.453.0",
