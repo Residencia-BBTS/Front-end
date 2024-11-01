@@ -3,7 +3,7 @@
 import { useDispatch } from "react-redux"
 import { Header } from "../components/header"
 import { useEffect } from "react"
-import { set_ticketData } from "../../redux/slices/state-slices"
+import { set_dayAmountFilter, set_ticketData } from "../../redux/slices/state-slices"
 import { TicketBarGraph } from "./ticket-bar-graph"
 import { TicketCard } from "./ticket-card"
 import { TicketLineGraph } from "./ticket-line-graph"
@@ -22,9 +22,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchTickets = async () => {
-      console.log('fetched')
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/tickets/');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/`);
         if (!response.ok) {
           throw new Error('Network response was not ok'); 
         }
@@ -52,8 +51,12 @@ const Dashboard = () => {
           <h1 className="text-4xl">Dashboard</h1>
           <div className="flex gap-2">
             <span className="text-2xl border-l border-gray75 pl-4">Exibir: </span>
-            <select name="" id="">
-              <option value="">Últimos 7 dias</option>
+            <select onChange={e => {
+              dispatch(set_dayAmountFilter(Number(e.currentTarget.value)))
+            }}>
+              <option value={7}>Últimos 7 dias</option>
+              <option value={15}>Últimos 15 dias</option>
+              <option value={30}>Últimos 30 dias</option>
             </select>
           </div>
         </div>

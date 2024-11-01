@@ -5,6 +5,7 @@ const initialState: IStates = {
   isNavOpen: false,
   isAboutModal: false,
   ticketData: null,
+  dayAmountFilter: 7
 }
 
 const stateSlice = createSlice({
@@ -19,6 +20,9 @@ const stateSlice = createSlice({
       },
       set_ticketData: (state, action: PayloadAction<Incident[]>) => {
         state.ticketData = action.payload
+      },
+      set_dayAmountFilter: (state, action: PayloadAction<number>) => {
+        state.dayAmountFilter = action.payload
       }
     }
 })  
@@ -26,6 +30,7 @@ const stateSlice = createSlice({
 export const { 
   set_isNavOpen,
   set_isAboutModal,
-  set_ticketData
+  set_ticketData,
+  set_dayAmountFilter
 } = stateSlice.actions;
 export default stateSlice.reducer;

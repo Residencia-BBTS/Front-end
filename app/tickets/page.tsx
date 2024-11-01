@@ -51,7 +51,6 @@ const Home = () => {
         }
         const data: Incident[] = await response.json();
         dispatch(set_ticketData(data))
-        console.log(data)
       } catch (error) {
         console.log(error.message)
       }
