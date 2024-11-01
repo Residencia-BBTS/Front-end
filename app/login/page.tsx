@@ -1,12 +1,15 @@
 'use client'
 
 import { signIn, useSession } from "next-auth/react"
+import { redirect } from "next/navigation"
 
 const Login = () => {
 
   const { data: session } = useSession()
-  
-  console.log(session)
+
+  if(session) {
+    redirect('/tickets')
+  }
 
  return (
   <div className="grid grid-cols-2 h-screen overflow-hidden">

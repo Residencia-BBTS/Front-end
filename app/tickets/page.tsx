@@ -11,13 +11,13 @@ import { redirect } from "next/navigation";
 
 const Home = () => {
 
-  const dispatch = useDispatch()
   const { data: session } = useSession()
 
   if(!session) {
     redirect('/login')
   }
 
+  const dispatch = useDispatch()
   const isAboutModalOpen = useSelector((state: { states: IStates }) => state.states.isAboutModal)
   const [ selectedTicket, setSelectedTicket ] = useState<Incident | null>(null)
   const ticketData = useSelector((state: { states: IStates }) => state.states.ticketData)

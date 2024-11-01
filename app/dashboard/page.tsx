@@ -13,6 +13,7 @@ import { redirect } from "next/navigation"
 const Dashboard = () => {
 
   const dispatch = useDispatch()
+
   const { data: session } = useSession()
 
   if(!session) {
