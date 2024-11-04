@@ -64,6 +64,7 @@ export const TicketLineGraph = () => {
                 label: 'Novos Tickets'
               },
             ]}
+            grid={{ vertical: true, horizontal: true }}
             width={500}
             height={300}
           />
