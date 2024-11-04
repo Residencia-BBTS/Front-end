@@ -2,13 +2,14 @@ import { useSelector } from "react-redux"
 import { IStates } from "../lib/global-state-interface"
 import { LineChart } from "@mui/x-charts"
 import dayjs from "dayjs"
+import { useCallback } from "react"
 
 export const TicketLineGraph = () => {
 
   const dayAmount = useSelector((state: { states: IStates }) => state.states.dayAmountFilter)
   const ticketData = useSelector((state: { states: IStates }) => state.states.ticketData)
 
-  const getLastDays = (dayAmount: number): string[] => {
+  const getLastDays = useCallback((dayAmount: number): string[] => {
     const startDate = new Date();
     const pastDays: string[] = []
 
@@ -18,9 +19,9 @@ export const TicketLineGraph = () => {
       pastDays.push(dayjs(pastDate).format('YYYY-MM-DD'));
   }
     return pastDays
-  }
+  }, [ dayAmount ])
 
-  const generateGraphData = (dayAmount: number): number[] => {
+  const generateGraphData = useCallback((dayAmount: number): number[] => {
     const days = getLastDays(dayAmount)
     const ticketsGroupedByDay: number[] = []
     let counter = 0
@@ -37,7 +38,7 @@ export const TicketLineGraph = () => {
     }
 
     return ticketsGroupedByDay
-  }
+  }, [ dayAmount ])
 
   return (
     <>
@@ -48,7 +49,7 @@ export const TicketLineGraph = () => {
             {
               color: '#F3D901',
               curve: "linear",
-              data: generateGraphData(dayAmount),
+              data: generateGraphData(dayAmount).reverse(),
               area: true,
               label: 'Novos Tickets'
             },
