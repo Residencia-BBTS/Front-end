@@ -39,20 +39,20 @@ export const Header = () => {
         </li>
       </ul>
       <div className="px-8 w-full bg-gray75 h-px" />
-      <div className={`flex mt-auto transition-all duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
+      <Link href="/profile" className={`flex mt-auto transition-all duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
         <div 
           className="size-14 rounded-full bg-cover"
           style={{backgroundImage: `url(${session && session.user.image})`}}
         />
-        <Link href="/profile" className="group flex flex-col">
+        <div className="group flex flex-col">
           <span className={`text-white group-hover:text-yellow400 text-2xl overflow-hidden transition-[width] duration-500 truncate ${isNavOpen ? 'w-40' : 'w-0'}`}>
             {session && session.user.name}
           </span>
           <span className={`text-white group-hover:text-yellow400 text-lg overflow-hidden transition-[width] duration-500 truncate ${isNavOpen ? 'w-40' : 'w-0'}`}>
             {session && session.user.email}
           </span>
-        </Link>
-      </div>
+        </div>
+      </Link>
     </div>
   )
 }

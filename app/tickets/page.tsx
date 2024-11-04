@@ -40,7 +40,6 @@ const Home = () => {
   }, [ ticketFilterSeverity ])
 
   useEffect(() => {
-    console.log(ticketFilterSeverity)
     const fetchTickets = async () => {
       try {
         const response = await fetch(
@@ -97,10 +96,10 @@ const Home = () => {
               <select onChange={e => setTicketFilterStatus(e.currentTarget.value)}>
                 <option value={null}>Todos</option>
                 <option value="New">Tickets Novos</option>
-                <option value="In_Progess">Em progresso</option>
+                <option value="In Progress">Em progresso</option>
                 <option value="Resolved">Resolvidos</option>
               </select>
-            </div>
+            </div>  
           </div>
         </div>
 
@@ -126,7 +125,7 @@ const Home = () => {
                   <td className="w-[16%] text-center text-lg">{dayjs(ticket.lastModifiedTime).format('DD/MM/YYYY')}</td>
                   <td className="w-[12%] text-center text-lg">{ticket.status}</td>
                   <td className="w-[10%] text-center text-lg">{ticket.severity}</td>
-                  <td className="w-[15%] text-center text-lg truncate">{ticket.assignedTo}</td>
+                  <td className="w-[15%] text-center text-lg truncate">{ticket.status === "New" ? 'Disponível' : ticket.assignedTo}</td>
                   <td className="w-[20%] text-center text-lg truncate">{ticket.title}</td>
                   <td className="w-[10%]">
                     <div className="flex items-center justify-center">

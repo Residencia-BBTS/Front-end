@@ -1,5 +1,5 @@
 interface Incident {
-  assignedTo: string,
+  assignedTo: string | null,
   createdTime: string,
   description: string,
   incidentURL: string,

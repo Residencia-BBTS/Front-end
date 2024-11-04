@@ -18,10 +18,10 @@ export const TicketLineGraph = () => {
     for (let i = 0; i < dayAmount; i++) {
       const pastDate = new Date(startDate);
       pastDate.setDate(startDate.getDate() - i);
-      pastDays.push(dayjs(pastDate).format('YYYY-MM-DD'));
+      pastDays.push(dayjs(pastDate).format('YYYY MM DD'));
   }
     return pastDays
-  }, [ dayAmount ])
+  }, [ dayAmount, ticketData ])
 
   const generateGraphData = useCallback((dayAmount: number): number[] => {
     const days = getLastDays(dayAmount)
@@ -30,7 +30,7 @@ export const TicketLineGraph = () => {
     for (let i = 0; i < days.length; i++) {
       let dayCounter = 0
       while (counter < ticketData.length) {
-        if (dayjs(ticketData[counter].createdTime).format('YYYY-MM-DD') !== days[i]) {
+        if (dayjs(ticketData[counter].createdTime).format('YYYY MM DD') !== days[i]) {
           break
         }
         if (ticketData[counter].status === 'New') {
@@ -42,33 +42,26 @@ export const TicketLineGraph = () => {
     }
 
     return ticketsGroupedByDay
-  }, [ dayAmount, ticketData ])
-
-  useEffect(() => { 
-    setLastDays(getLastDays(dayAmount).reverse())    
-    setGraphData(generateGraphData(dayAmount).reverse())    
-  })
+  }, [ dayAmount ])
 
   return (
     <>
       <div className="p-9 border border-blue400 rounded-xl">
-        {lastDays && graphData && (
-          <LineChart
-            xAxis={[{ scaleType: 'point', data: lastDays }]}
-            series={[
-              {
-                color: '#F3D901',
-                curve: "linear",
-                data: graphData,
-                area: true,
-                label: 'Novos Tickets'
-              },
-            ]}
-            grid={{ vertical: true, horizontal: true }}
-            width={500}
-            height={300}
-          />
-        )}
+        <LineChart
+          xAxis={[{ scaleType: 'point', data: getLastDays(dayAmount).reverse() }]}
+          series={[
+            {
+              color: '#F3D901',
+              curve: "linear",
+              data: generateGraphData(dayAmount).reverse(),
+              area: true,
+              label: 'Novos Tickets'
+            },
+          ]}
+          grid={{ vertical: true, horizontal: true }}
+          width={500}
+          height={300}
+        />
       </div>
     </>
   )
