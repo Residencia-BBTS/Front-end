@@ -1,6 +1,6 @@
 'use client'
 
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Header } from "../components/header"
 import { useEffect } from "react"
 import { set_dayAmountFilter, set_ticketData } from "../../redux/slices/state-slices"
@@ -9,12 +9,15 @@ import { TicketCard } from "./ticket-card"
 import { TicketLineGraph } from "./ticket-line-graph"
 import { useSession } from "next-auth/react"
 import { redirect } from "next/navigation"
+import { IStates } from "../lib/global-state-interface"
 
 const Dashboard = () => {
 
   const dispatch = useDispatch()
 
   const { data: session } = useSession()
+
+  const dayAmount = useSelector((state: { states: IStates }) => state.states.dayAmountFilter)
 
   if(!session) {
     redirect('/login')
@@ -23,7 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/?days=${dayAmount}`);
         if (!response.ok) {
           throw new Error('Network response was not ok'); 
         }
@@ -37,9 +40,8 @@ const Dashboard = () => {
     fetchTickets();
 
     const intervalId = setInterval(fetchTickets, 10000);
-
     return () => clearInterval(intervalId);
-  }, [])
+  }, [ dayAmount ])
 
   return (
     <>
@@ -61,7 +63,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="flex gap-24">
+        <div className="flex gap-16">
           <TicketCard 
             name="Tickets novos"
             type="New"

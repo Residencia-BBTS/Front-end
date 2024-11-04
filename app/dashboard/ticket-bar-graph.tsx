@@ -6,6 +6,8 @@ export const TicketBarGraph = () => {
 
   const ticketData = useSelector((state: { states: IStates }) => state.states.ticketData)
 
+  
+
   return (
     <>
       <div className="p-9 border border-blue400 rounded-xl">

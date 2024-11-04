@@ -2,12 +2,14 @@ import { useSelector } from "react-redux"
 import { IStates } from "../lib/global-state-interface"
 import { LineChart } from "@mui/x-charts"
 import dayjs from "dayjs"
-import { useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 export const TicketLineGraph = () => {
 
   const dayAmount = useSelector((state: { states: IStates }) => state.states.dayAmountFilter)
   const ticketData = useSelector((state: { states: IStates }) => state.states.ticketData)
+  const [ lastDays, setLastDays ] = useState<string[] | null>(null)
+  const [ graphData, setGraphData ] = useState<number[] | null>(null)
 
   const getLastDays = useCallback((dayAmount: number): string[] => {
     const startDate = new Date();
@@ -31,32 +33,41 @@ export const TicketLineGraph = () => {
         if (dayjs(ticketData[counter].createdTime).format('YYYY-MM-DD') !== days[i]) {
           break
         }
-        dayCounter++
+        if (ticketData[counter].status === 'New') {
+          dayCounter++
+        }
         counter++
       }
       ticketsGroupedByDay[i] = dayCounter
     }
 
     return ticketsGroupedByDay
-  }, [ dayAmount ])
+  }, [ dayAmount, ticketData ])
+
+  useEffect(() => { 
+    setLastDays(getLastDays(dayAmount).reverse())    
+    setGraphData(generateGraphData(dayAmount).reverse())    
+  })
 
   return (
     <>
       <div className="p-9 border border-blue400 rounded-xl">
-        <LineChart
-          xAxis={[{ scaleType: 'point', data: getLastDays(dayAmount).reverse() }]}
-          series={[
-            {
-              color: '#F3D901',
-              curve: "linear",
-              data: generateGraphData(dayAmount).reverse(),
-              area: true,
-              label: 'Novos Tickets'
-            },
-          ]}
-          width={500}
-          height={300}
-        />
+        {lastDays && graphData && (
+          <LineChart
+            xAxis={[{ scaleType: 'point', data: lastDays }]}
+            series={[
+              {
+                color: '#F3D901',
+                curve: "linear",
+                data: graphData,
+                area: true,
+                label: 'Novos Tickets'
+              },
+            ]}
+            width={500}
+            height={300}
+          />
+        )}
       </div>
     </>
   )
