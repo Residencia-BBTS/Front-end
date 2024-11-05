@@ -21,7 +21,7 @@ const Login = () => {
 
     <div className="flex items-center justify-center w-full">
       <div className="flex flex-col items-center justify-center w-[425px] gap-3">
-        <Button onClick={() => signIn("azure-ad-b2c", { callbackUrl: '/tickets' })}>Azure</Button>
+        <Button onClick={() => signIn("azure-ad", { callbackUrl: '/tickets' })}>Azure</Button>
         <Button onClick={() => signIn("github", { callbackUrl: '/tickets' })}>Github</Button>
       </div>
     </div>
