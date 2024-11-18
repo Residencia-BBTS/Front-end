@@ -1,6 +1,7 @@
 export interface IStates {
   isNavOpen: boolean,
   isAboutModal: boolean,
-  ticketData: Incident[]
+  ticketData: Incident[],
+  userList: User[],
   dayAmountFilter: number
 }

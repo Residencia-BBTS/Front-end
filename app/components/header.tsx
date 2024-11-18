@@ -1,6 +1,6 @@
 'use client'
 
-import { LayoutGrid, Ticket } from "lucide-react"
+import { LayoutGrid, Ticket, User } from "lucide-react"
 import { useSelector, useDispatch } from "react-redux";
 import { IStates } from "../lib/global-state-interface";
 import { set_isNavOpen } from "../../redux/slices/state-slices";
@@ -35,6 +35,12 @@ export const Header = () => {
           <Link href="/dashboard" className={`group flex items-center duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
             <span><LayoutGrid className="group-hover:text-yellow400 text-white size-8" /></span>
             <span className={`group-hover:text-yellow400 text-white text-2xl overflow-hidden transition-[width] duration-500 ${isNavOpen ? 'w-40' : 'w-0'}`}>Dashboard</span>
+          </Link>
+        </li>
+        <li>
+          <Link href="/users" className={`group flex items-center duration-500 ${isNavOpen ? 'gap-5' : 'gap-0'}`}>
+            <span><User className="group-hover:text-yellow400 text-white size-8" /></span>
+            <span className={`group-hover:text-yellow400 text-white text-2xl overflow-hidden transition-[width] duration-500 ${isNavOpen ? 'w-40' : 'w-0'}`}>Usuários</span>
           </Link>
         </li>
       </ul>
