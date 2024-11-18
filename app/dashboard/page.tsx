@@ -26,7 +26,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/?days=${dayAmount}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_TICKET_API_URL}/?days=${dayAmount}`);
         if (!response.ok) {
           throw new Error('Network response was not ok'); 
         }

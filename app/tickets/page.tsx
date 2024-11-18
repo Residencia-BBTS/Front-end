@@ -43,7 +43,7 @@ const Home = () => {
     const fetchTickets = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/?order=${ticketOrder}${ticketFilterSeverity ? `&severity=${ticketFilterSeverity}` : ''}${ticketFilterStatus ? `&status=${ticketFilterStatus}` : ''}`
+          `${process.env.NEXT_PUBLIC_TICKET_API_URL}/?order=${ticketOrder}${ticketFilterSeverity ? `&severity=${ticketFilterSeverity}` : ''}${ticketFilterStatus ? `&status=${ticketFilterStatus}` : ''}`
         );
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -120,14 +120,14 @@ const Home = () => {
             <tbody className="divide-y divide-gray75 border-b border-gray75">
               {ticketData && ticketData.map(ticket => (
                 <tr key={ticket.uuid} className="h-14">
-                  <td className="w-[15%] text-center text-lg truncate">{ticket.uuid}</td>
-                  <td className="w-[13%] text-center text-lg">{dayjs(ticket.createdTime).format('DD/MM/YYYY')}</td>
-                  <td className="w-[16%] text-center text-lg">{dayjs(ticket.lastModifiedTime).format('DD/MM/YYYY')}</td>
-                  <td className="w-[12%] text-center text-lg">{ticket.status}</td>
-                  <td className="w-[10%] text-center text-lg">{ticket.severity}</td>
-                  <td className="w-[15%] text-center text-lg truncate">{ticket.status === "New" ? 'Disponível' : ticket.assignedTo}</td>
-                  <td className="w-[20%] text-center text-lg truncate">{ticket.title}</td>
-                  <td className="w-[10%]">
+                  <td className="text-center text-lg truncate">{ticket.uuid}</td>
+                  <td className="text-center text-lg">{dayjs(ticket.createdTime).format('DD/MM/YYYY')}</td>
+                  <td className="text-center text-lg">{dayjs(ticket.lastModifiedTime).format('DD/MM/YYYY')}</td>
+                  <td className="text-center text-lg">{ticket.status}</td>
+                  <td className="text-center text-lg">{ticket.severity}</td>
+                  <td className="text-center text-lg truncate">{ticket.status === "New" ? 'Disponível' : ticket.assignedTo}</td>
+                  <td className="text-center text-lg truncate">{ticket.title}</td>
+                  <td>
                     <div className="flex items-center justify-center">
                       <Button
                         size="small"
