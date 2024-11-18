@@ -33,14 +33,12 @@ const Users = () => {
     return `${days} dias, ${hours} horas, ${minutes} minutos, ${secondsFormatted} segundos`
 }, [ userList ])
 
-console.log(formatTime(1641600))
-
   useEffect(() => {
     const fetchTickets = async () => {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_USER_API_URL}/all-users`
-        );
+        )
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -72,7 +70,7 @@ console.log(formatTime(1641600))
           <table className="w-full table-fixed">
             <thead className="text-2xl h-16 border border-gray75">
               <tr>
-                <th className="w-[15%] font-normal"></th>
+                <th className="w-[15%] font-normal">Tipo</th>
                 <th className="w-[15%] font-normal">Nome</th>
                 <th className="w-[15%] font-normal">E-mail</th>
                 <th className="w-[15%] font-normal">Tickets atribuidos</th>
