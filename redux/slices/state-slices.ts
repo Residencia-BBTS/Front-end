@@ -1,12 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { IStates } from "../../app/lib/global-state-interface";
 
+const end = new Date().toISOString()
+const start = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString()
+
 const initialState: IStates = {
   isNavOpen: false,
   isAboutModal: false,
   ticketData: null,
   userList: null,
-  dayAmountFilter: 7
+  dayRangeFilter: {
+    from: start,
+    to: end
+  }
 }
 
 const stateSlice = createSlice({
@@ -25,9 +31,12 @@ const stateSlice = createSlice({
       set_userList: (state, action: PayloadAction<User[]>) => {
         state.userList = action.payload
       },
-      set_dayAmountFilter: (state, action: PayloadAction<number>) => {
-        state.dayAmountFilter = action.payload
-      }
+      set_dayRangeFilter: (state, action: PayloadAction<DateRange>) => {
+        state.dayRangeFilter = {
+          from: action.payload.from ? new Date(action.payload.from).toISOString() : null,
+          to: action.payload.to ? new Date(action.payload.to).toISOString() : null,
+        };
+      },
     }
 })  
 
@@ -36,6 +45,6 @@ export const {
   set_isAboutModal,
   set_ticketData,
   set_userList,
-  set_dayAmountFilter
+  set_dayRangeFilter
 } = stateSlice.actions;
 export default stateSlice.reducer;
