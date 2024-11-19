@@ -13,7 +13,7 @@ import { IStates } from "../lib/global-state-interface"
 import { DateRange, DayPicker } from "react-day-picker"
 import "react-day-picker/dist/style.css"
 import dayjs from "dayjs"
-import { Calendar } from "lucide-react"
+import { Calendar, RotateCcw } from "lucide-react"
 
 const Dashboard = () => {
 
@@ -33,11 +33,22 @@ const Dashboard = () => {
     setIsDateModalOpen(!isDateModalOpen)
   }
 
+  const resetCalendar = () => {
+    dispatch(set_dayRangeFilter({
+      to: new Date().toISOString(),
+      from: new Date(new Date().setDate(new Date().getDate() - 30)).toISOString(),
+    }))
+    setDateRangeAsDate({
+      from: new Date(dateRange.from),
+      to: new Date(dateRange.to),
+    })
+  }
+
   useEffect(() => {
     setDateRangeAsDate({
       from: new Date(dateRange.from),
       to: new Date(dateRange.to),
-    });
+    })
   }, [])
 
   useEffect(() => {
@@ -77,14 +88,19 @@ const Dashboard = () => {
 
         <div className="self-start space-y-4">
           <h1 className="text-4xl">Dashboard</h1>
-          <button 
-            className="flex items-center gap-2"
-            onClick={handleDateModal}
-          >
-            <span className="text-2xl border-l border-gray75 pl-4">Exibir: </span>
-            <span>{`${dayjs(dateRange.from).format('DD/MM/YYYY')} até ${dayjs(dateRange.to).format('DD/MM/YYYY')}`}</span>
-            <Calendar />
-          </button>
+          <div className="flex gap-2">
+            <button 
+              className="flex items-center gap-2"
+              onClick={handleDateModal}
+            >
+              <span className="text-2xl border-l border-gray75 pl-4">Exibir: </span>
+              <span className="text-lg">{`${dayjs(dateRange.from).format('DD/MM/YYYY')} até ${dayjs(dateRange.to).format('DD/MM/YYYY')}`}</span>
+              <Calendar className="text-gray-500" />
+            </button>
+            <button onClick={resetCalendar}>
+              <RotateCcw className="text-gray-600" />
+            </button>
+          </div>
         </div>
 
         <div className="flex gap-16">
@@ -107,8 +123,8 @@ const Dashboard = () => {
         </div>
 
         <div className="flex gap-16">
-          {/* <TicketBarGraph />
-          <TicketLineGraph /> */}
+          <TicketBarGraph />
+          <TicketLineGraph /> 
         </div>
 
       </div>

@@ -2,24 +2,34 @@ import { useSelector } from "react-redux"
 import { IStates } from "../lib/global-state-interface"
 import { LineChart } from "@mui/x-charts"
 import dayjs from "dayjs"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 export const TicketLineGraph = () => {
 
-  const dayAmount = useSelector((state: { states: IStates }) => state.states.dayAmountFilter)
+  const dateRange = useSelector((state: { states: IStates }) => state.states.dayRangeFilter)
   const ticketData = useSelector((state: { states: IStates }) => state.states.ticketData)
 
+  const [ dayAmount, setDayAmount ] = useState<number | null>(null)
+
+  const  daysBetweenDates = useCallback((date1: string, date2: string): number => {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+
+    const differenceInMs = Math.abs(d2.getTime() - d1.getTime());
+    return Math.ceil(differenceInMs / (1000 * 60 * 60 * 24));
+  }, [])
+
   const getLastDays = useCallback((dayAmount: number): string[] => {
-    const startDate = new Date();
+    const startDate = new Date(dateRange.to);
     const pastDays: string[] = []
 
-    for (let i = 0; i < dayAmount; i++) {
+    for (let i = 0; i <= dayAmount; i++) {
       const pastDate = new Date(startDate);
       pastDate.setDate(startDate.getDate() - i);
       pastDays.push(dayjs(pastDate).format('YYYY MM DD'));
   }
     return pastDays
-  }, [ dayAmount, ticketData ])
+  }, [ dayAmount, ticketData, dateRange ])
 
   const generateGraphData = useCallback((dayAmount: number): number[] => {
     const days = getLastDays(dayAmount)
@@ -41,6 +51,12 @@ export const TicketLineGraph = () => {
 
     return ticketsGroupedByDay
   }, [ dayAmount, ticketData ])
+
+  useEffect(() => {
+    if(dateRange) {
+      setDayAmount(daysBetweenDates(dateRange.from, dateRange.to))
+    }
+  }, [ dateRange ])
 
   return (
     <>
