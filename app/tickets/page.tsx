@@ -57,7 +57,7 @@ const Home = () => {
 
     fetchTickets();
 
-    const intervalId = setInterval(fetchTickets, 60000);
+    const intervalId = setInterval(fetchTickets, 10000);
 
     return () => clearInterval(intervalId);
   }, [ ticketOrder, ticketFilterStatus, ticketFilterSeverity ])

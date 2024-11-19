@@ -3,5 +3,5 @@ export interface IStates {
   isAboutModal: boolean,
   ticketData: Incident[],
   userList: User[],
-  dayAmountFilter: number
+  dayRangeFilter: DateRange
 }
