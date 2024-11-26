@@ -16,7 +16,7 @@ git clone <URL_DO_REPOSITORIO>
 
 ### 2. Instalar as Dependências
 
-Instale as dependências do projeto listadas no arquivo requirements.txt:
+Instale as dependências do projeto:
 
 ```bash
 npm i
