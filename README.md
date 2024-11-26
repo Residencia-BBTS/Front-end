@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<img src="https://github.com/user-attachments/assets/c6fb3686-082b-49fd-87cd-e5f737add6b6" alt="image" width="350" height="200">
 
-## Getting Started
+# BBTS - Sistema de Gerenciamento de Tickets
 
-First, run the development server:
+Projeto que consistiu no desenvolvimento de um sistema integrado de gerenciamento de tickets, projetado para centralizar, em uma única plataforma, dados provenientes de diversos sistemas de help desk. A solução foi criada com o objetivo de unificar informações, facilitando o acompanhamento e a gestão eficiente de demandas. 
+
+## Etapas para rodar o projeto:
+
+### 1. Clonar o Repositório
+
+Clone o repositório do projeto para o seu ambiente local:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <URL_DO_REPOSITORIO>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalar as Dependências
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Instale as dependências do projeto listadas no arquivo requirements.txt:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm i
+```
 
-## Learn More
+### 3. Rodar o Servidor
 
-To learn more about Next.js, take a look at the following resources:
+Utilize python manage.py runserver para rodar o servidor:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run server
+```
