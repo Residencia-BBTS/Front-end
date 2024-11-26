@@ -22,7 +22,26 @@ Instale as dependências do projeto:
 npm i
 ```
 
-### 3. Rodar o Servidor
+### 3. Definir o .env.local
+
+configure as variaveis de ambiente:
+
+```bash
+NEXTAUTH_URL=XXXXX
+NEXTAUTH_SECRET=XXXXX
+
+NEXT_PUBLIC_TICKET_API_URL=XXXXX/api/tickets
+NEXT_PUBLIC_USER_API_URL=XXXXX/api/users
+
+AZURE_AD_TENANT_NAME=XXXXX
+AZURE_AD_CLIENT_ID=XXXXX
+AZURE_AD_CLIENT_SECRET=XXXXX
+
+GITHUB_ID=XXXXX
+GITHUB_SECRET=XXXXX
+```
+
+### 4. Rodar o Servidor
 
 Utilize python manage.py runserver para rodar o servidor:
 
